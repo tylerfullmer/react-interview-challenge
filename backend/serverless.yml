@@ -1,0 +1,26 @@
+org: tylerfullmer
+app: backend
+service: backend
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-localstack 
+
+custom:
+  localstack:
+    stages:
+      - local
+    host: http://localhost
+    edgePort: 4566
+    autostart: true
+  stages:
+    local:
+      REGION: us-east-1
+      STAGE: local
+
+functions: ${file(./config/functions.yml)}
